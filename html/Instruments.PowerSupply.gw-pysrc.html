@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Instruments.PowerSupply.gw</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="Instruments-module.html">Package&nbsp;Instruments</a> ::
+        <a href="Instruments.PowerSupply-module.html">Package&nbsp;PowerSupply</a> ::
+        Module&nbsp;gw
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="Instruments.PowerSupply.gw-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="Instruments.PowerSupply.gw-module.html">Module Instruments.PowerSupply.gw</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-keyword">import</tt> <tt class="py-name">pyvisa</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"> </tt>
+<a name="gw"></a><div id="gw-def"><a name="L3"></a><tt class="py-lineno"> 3</tt> <a class="py-toggle" href="#" id="gw-toggle" onclick="return toggle('gw');">-</a><tt class="py-line"><tt class="py-keyword">class</tt> <a class="py-def-name" href="Instruments.PowerSupply.gw.gw-class.html">gw</a><tt class="py-op">(</tt> <tt class="py-base-class">object</tt> <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="gw-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="gw-expanded"><a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"> </tt>
+<a name="gw.__init__"></a><div id="gw.__init__-def"><a name="L5"></a><tt class="py-lineno"> 5</tt> <a class="py-toggle" href="#" id="gw.__init__-toggle" onclick="return toggle('gw.__init__');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Instruments.PowerSupply.gw.gw-class.html#__init__">__init__</a><tt class="py-op">(</tt> <tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">gpib_addr</tt> <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="gw.__init__-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="gw.__init__-expanded"><a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line">        <tt class="py-name">object</tt><tt class="py-op">.</tt><tt id="link-0" class="py-name" targets="Method Instruments.Climate.oven.Oven.__init__()=Instruments.Climate.oven.Oven-class.html#__init__,Method Instruments.DMM.keysight34410A.keysight34410A.__init__()=Instruments.DMM.keysight34410A.keysight34410A-class.html#__init__,Method Instruments.PowerSupply.gw.gw.__init__()=Instruments.PowerSupply.gw.gw-class.html#__init__,Method Instruments.SignalSource.digistant4462.DIGISTANT4462.__init__()=Instruments.SignalSource.digistant4462.DIGISTANT4462-class.html#__init__"><a title="Instruments.Climate.oven.Oven.__init__
+Instruments.DMM.keysight34410A.keysight34410A.__init__
+Instruments.PowerSupply.gw.gw.__init__
+Instruments.SignalSource.digistant4462.DIGISTANT4462.__init__" class="py-name" href="#" onclick="return doclink('link-0', '__init__', 'link-0');">__init__</a></tt><tt class="py-op">(</tt> <tt class="py-name">self</tt> <tt class="py-op">)</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line">        <tt class="py-name">localResources</tt> <tt class="py-op">=</tt> <tt class="py-name">pyvisa</tt><tt class="py-op">.</tt><tt class="py-name">ResourceManager</tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line">        <tt class="py-comment">#print(localResources.FindResources("?*"))</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">addr</tt> <tt class="py-op">=</tt> <tt class="py-name">gpib_addr</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ql</tt> <tt class="py-op">=</tt> <tt class="py-name">localResources</tt><tt class="py-op">.</tt><tt class="py-name">open_resource</tt><tt class="py-op">(</tt> <tt class="py-string">"GPIB0::%i::INSTR"</tt> <tt class="py-op">%</tt> <tt class="py-name">gpib_addr</tt> <tt class="py-op">)</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">id</tt> <tt class="py-op">=</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ql</tt><tt class="py-op">.</tt><tt class="py-name">query</tt><tt class="py-op">(</tt> <tt class="py-string">"*IDN?"</tt> <tt class="py-op">)</tt><tt class="py-op">.</tt><tt class="py-name">split</tt><tt class="py-op">(</tt> <tt class="py-string">"\n"</tt><tt class="py-op">,</tt> <tt class="py-number">1</tt> <tt class="py-op">)</tt> <tt class="py-op">[</tt> <tt class="py-number">0</tt> <tt class="py-op">]</tt> </tt>
+</div><a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"> </tt>
+<a name="gw.shutDown"></a><div id="gw.shutDown-def"><a name="L14"></a><tt class="py-lineno">14</tt> <a class="py-toggle" href="#" id="gw.shutDown-toggle" onclick="return toggle('gw.shutDown');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Instruments.PowerSupply.gw.gw-class.html#shutDown">shutDown</a><tt class="py-op">(</tt> <tt class="py-param">self</tt> <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="gw.shutDown-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="gw.shutDown-expanded"><a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line">        <tt class="py-keyword">if</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ql</tt> <tt class="py-op">!=</tt> <tt class="py-name">None</tt><tt class="py-op">:</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Method Instruments.PowerSupply.gw.gw.outOff()=Instruments.PowerSupply.gw.gw-class.html#outOff"><a title="Instruments.PowerSupply.gw.gw.outOff" class="py-name" href="#" onclick="return doclink('link-1', 'outOff', 'link-1');">outOff</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line">            <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ql</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt> <tt class="py-string">"LOCAL"</tt> <tt class="py-op">)</tt> </tt>
+</div><a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"> </tt>
+<a name="gw.getid"></a><div id="gw.getid-def"><a name="L19"></a><tt class="py-lineno">19</tt> <a class="py-toggle" href="#" id="gw.getid-toggle" onclick="return toggle('gw.getid');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Instruments.PowerSupply.gw.gw-class.html#getid">getid</a><tt class="py-op">(</tt> <tt class="py-param">self</tt> <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="gw.getid-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="gw.getid-expanded"><a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line">        <tt class="py-keyword">return</tt> <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">id</tt> </tt>
+</div><a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"> </tt>
+<a name="gw.setV"></a><div id="gw.setV-def"><a name="L22"></a><tt class="py-lineno">22</tt> <a class="py-toggle" href="#" id="gw.setV-toggle" onclick="return toggle('gw.setV');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Instruments.PowerSupply.gw.gw-class.html#setV">setV</a><tt class="py-op">(</tt> <tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">value</tt> <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="gw.setV-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="gw.setV-expanded"><a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line">        <tt class="py-comment">#set V output to a given value</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ql</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt> <tt class="py-string">"V1 %f"</tt> <tt class="py-op">%</tt> <tt class="py-name">value</tt> <tt class="py-op">)</tt> </tt>
+</div><a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"> </tt>
+<a name="gw.setIlim"></a><div id="gw.setIlim-def"><a name="L26"></a><tt class="py-lineno">26</tt> <a class="py-toggle" href="#" id="gw.setIlim-toggle" onclick="return toggle('gw.setIlim');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Instruments.PowerSupply.gw.gw-class.html#setIlim">setIlim</a><tt class="py-op">(</tt> <tt class="py-param">self</tt><tt class="py-op">,</tt> <tt class="py-param">value</tt> <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="gw.setIlim-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="gw.setIlim-expanded"><a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line">        <tt class="py-docstring">''' set I limit on output to a given value '''</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ql</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt> <tt class="py-string">"I1 %f"</tt> <tt class="py-op">%</tt> <tt class="py-name">value</tt> <tt class="py-op">)</tt> </tt>
+</div><a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"> </tt>
+<a name="gw.outOn"></a><div id="gw.outOn-def"><a name="L30"></a><tt class="py-lineno">30</tt> <a class="py-toggle" href="#" id="gw.outOn-toggle" onclick="return toggle('gw.outOn');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Instruments.PowerSupply.gw.gw-class.html#outOn">outOn</a><tt class="py-op">(</tt> <tt class="py-param">self</tt> <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="gw.outOn-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="gw.outOn-expanded"><a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line">        <tt class="py-docstring">''' turns ON the output '''</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ql</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt> <tt class="py-string">"OP1 1"</tt> <tt class="py-op">)</tt> </tt>
+</div><a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
+<a name="gw.outOff"></a><div id="gw.outOff-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="gw.outOff-toggle" onclick="return toggle('gw.outOff');">-</a><tt class="py-line">    <tt class="py-keyword">def</tt> <a class="py-def-name" href="Instruments.PowerSupply.gw.gw-class.html#outOff">outOff</a><tt class="py-op">(</tt> <tt class="py-param">self</tt> <tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="gw.outOff-collapsed" style="display:none;" pad="++" indent="++++++++"></div><div id="gw.outOff-expanded"><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">        <tt class="py-docstring">''' turns OFF the output '''</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line">        <tt class="py-name">self</tt><tt class="py-op">.</tt><tt class="py-name">ql</tt><tt class="py-op">.</tt><tt class="py-name">write</tt><tt class="py-op">(</tt> <tt class="py-string">"OP1 0 "</tt><tt class="py-op">)</tt> </tt>
+</div></div><a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Sep 25 14:50:39 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>

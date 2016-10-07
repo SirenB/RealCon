@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>epydoc</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;epydoc
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="epydoc-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module epydoc</h1><p class="nomargin-top"><span class="codelink"><a href="epydoc-pysrc.html">source&nbsp;code</a></span></p>
+<pre class="literalblock">
+
+Automatic Python reference documentation generator.  Epydoc processes
+Python modules and docstrings to generate formatted API documentation,
+in the form of HTML pages.  Epydoc can be used via a command-line
+interface (`epydoc.cli`) and a graphical interface (`epydoc.gui`).
+Both interfaces let the user specify a set of modules or other objects
+to document, and produce API documentation using the following steps:
+
+1. Extract basic information about the specified objects, and objects
+   that are related to them (such as the values defined by a module).
+   This can be done via introspection, parsing, or both:
+
+   * *Introspection* imports the objects, and examines them directly
+     using Python's introspection mechanisms.
+  
+   * *Parsing* reads the Python source files that define the objects,
+     and extracts information from those files.
+
+2. Combine and process that information.
+
+   * **Merging**: Merge the information obtained from introspection &amp;
+     parsing each object into a single structure.
+     
+   * **Linking**: Replace any &quot;pointers&quot; that were created for
+     imported variables with the documentation that they point to.
+     
+   * **Naming**: Assign unique *canonical names* to each of the
+     specified objects, and any related objects.
+     
+   * **Docstrings**: Parse the docstrings of each of the specified
+     objects.
+     
+   * **Inheritance**: Add variables to classes for any values that
+     they inherit from their base classes.
+
+3. Generate output.  Output can be generated in a variety of formats:
+
+   * An HTML webpage.
+  
+   * A LaTeX document (which can be rendered as a PDF file)
+
+   * A plaintext description.
+
+.. digraph:: Overview of epydoc's architecture
+   :caption: The boxes represent steps in epydoc's processing chain.
+             Arrows are annotated with the data classes used to
+             communicate between steps.  The lines along the right
+             side mark what portions of the processing chain are
+             initiated by build_doc_index() and cli().  Click on
+             any item to see its documentation.
+             
+   /*
+                  Python module or value                 *       *
+                      /           \                      |       |
+                     V             V                     |       |
+            introspect_docs()  parse_docs()              |       |
+                        \        /                       |       |
+                         V      V                        |       |
+                        merge_docs()                     |       |
+                             |              build_doc_index()  cli()
+                             V                           |       |
+                       link_imports()                    |       |
+                             |                           |       |
+                             V                           |       |
+                    assign_canonical_names()             |       |
+                             |                           |       |
+                             V                           |       |
+                      parse_docstrings()                 |       |
+                             |                           |       |
+                             V                           |       |
+                       inherit_docs()                    *       |
+                      /      |        \                          |
+                     V       V         V                         |
+                HTMLWriter LaTeXWriter PlaintextWriter           *
+   */
+
+   ranksep = 0.1;
+   node [shape=&quot;box&quot;, height=&quot;0&quot;, width=&quot;0&quot;]
+   
+   { /* Task nodes */
+     node [fontcolor=&quot;#000060&quot;]
+     introspect  [label=&quot;Introspect value:\nintrospect_docs()&quot;,
+                  href=&quot;&lt;docintrospecter.introspect_docs&gt;&quot;]
+     parse       [label=&quot;Parse source code:\nparse_docs()&quot;,
+                  href=&quot;&lt;docparser.parse_docs&gt;&quot;]
+     merge       [label=&quot;Merge introspected &amp; parsed docs:\nmerge_docs()&quot;,
+                  href=&quot;&lt;docbuilder.merge_docs&gt;&quot;, width=&quot;2.5&quot;]
+     link        [label=&quot;Link imports:\nlink_imports()&quot;,
+                  href=&quot;&lt;docbuilder.link_imports&gt;&quot;, width=&quot;2.5&quot;]
+     name        [label=&quot;Assign names:\nassign_canonical_names()&quot;,
+                  href=&quot;&lt;docbuilder.assign_canonical_names&gt;&quot;, width=&quot;2.5&quot;]
+     docstrings  [label=&quot;Parse docstrings:\nparse_docstring()&quot;,
+                  href=&quot;&lt;docstringparser.parse_docstring&gt;&quot;, width=&quot;2.5&quot;]
+     inheritance [label=&quot;Inherit docs from bases:\ninherit_docs()&quot;,
+                  href=&quot;&lt;docbuilder.inherit_docs&gt;&quot;, width=&quot;2.5&quot;]
+     write_html  [label=&quot;Write HTML output:\nHTMLWriter&quot;,
+                 href=&quot;&lt;docwriter.html&gt;&quot;]
+     write_latex  [label=&quot;Write LaTeX output:\nLaTeXWriter&quot;,
+                 href=&quot;&lt;docwriter.latex&gt;&quot;]
+     write_text  [label=&quot;Write text output:\nPlaintextWriter&quot;,
+                 href=&quot;&lt;docwriter.plaintext&gt;&quot;]
+   }
+
+   { /* Input &amp; Output nodes */
+     node [fontcolor=&quot;#602000&quot;, shape=&quot;plaintext&quot;]
+     input [label=&quot;Python module or value&quot;]
+     output [label=&quot;DocIndex&quot;, href=&quot;&lt;apidoc.DocIndex&gt;&quot;]
+   }
+
+   { /* Graph edges */
+     edge [fontcolor=&quot;#602000&quot;]
+     input -&gt; introspect
+     introspect -&gt; merge [label=&quot;APIDoc&quot;, href=&quot;&lt;apidoc.APIDoc&gt;&quot;]
+     input -&gt; parse
+     parse -&gt; merge [label=&quot;APIDoc&quot;, href=&quot;&lt;apidoc.APIDoc&gt;&quot;]
+     merge -&gt; link [label=&quot; DocIndex&quot;, href=&quot;&lt;apidoc.DocIndex&gt;&quot;]
+     link -&gt; name [label=&quot; DocIndex&quot;, href=&quot;&lt;apidoc.DocIndex&gt;&quot;]
+     name -&gt; docstrings [label=&quot; DocIndex&quot;, href=&quot;&lt;apidoc.DocIndex&gt;&quot;]
+     docstrings -&gt; inheritance [label=&quot; DocIndex&quot;, href=&quot;&lt;apidoc.DocIndex&gt;&quot;]
+     inheritance -&gt; output
+     output -&gt; write_html
+     output -&gt; write_latex
+     output -&gt; write_text
+   }
+
+   { /* Task collections */
+     node [shape=&quot;circle&quot;,label=&quot;&quot;,width=.1,height=.1]
+     edge [fontcolor=&quot;black&quot;, dir=&quot;none&quot;, fontcolor=&quot;#000060&quot;]
+     l3 -&gt; l4 [label=&quot; epydoc.\l docbuilder.\l build_doc_index()&quot;,
+               href=&quot;&lt;docbuilder.build_doc_index&gt;&quot;]
+     l1 -&gt; l2 [label=&quot; epydoc.\l cli()&quot;, href=&quot;&lt;cli&gt;&quot;]
+   }
+   { rank=same; l1 l3 input }
+   { rank=same; l2 write_html }
+   { rank=same; l4 output }
+
+Package Organization
+====================
+The epydoc package contains the following subpackages and modules:
+
+.. packagetree::
+   :style: UML
+
+The user interfaces are provided by the `gui` and `cli` modules.
+The `apidoc` module defines the basic data types used to record
+information about Python objects.  The programmatic interface to
+epydoc is provided by `docbuilder`.  Docstring markup parsing is
+handled by the `markup` package, and output generation is handled by
+the `docwriter` package.  See the submodule list for more
+information about the submodules and subpackages.
+
+:group User Interface: gui, cli
+:group Basic Data Types: apidoc
+:group Documentation Generation: docbuilder, docintrospecter, docparser
+:group Docstring Processing: docstringparser, markup
+:group Output Generation: docwriter
+:group Completeness Checking: checker
+:group Miscellaneous: log, util, test, compat
+
+:author: `Edward Loper &lt;edloper@gradient.cis.upenn.edu&gt;`__
+:requires: Python 2.3+
+:version: 3.0.1
+:see: `The epydoc webpage &lt;http://epydoc.sourceforge.net&gt;`__
+:see: `The epytext markup language
+    manual &lt;http://epydoc.sourceforge.net/epytext.html&gt;`__
+
+:todo: Create a better default top_page than trees.html.
+:todo: Fix trees.html to work when documenting non-top-level
+       modules/packages
+:todo: Implement @include
+:todo: Optimize epytext
+:todo: More doctests
+:todo: When introspecting, limit how much introspection you do (eg,
+       don't construct docs for imported modules' vars if it's
+       not necessary)
+
+:bug: UserDict.* is interpreted as imported .. why??
+
+:license: IBM Open Source License
+:copyright: |copy| 2006 Edward Loper
+
+:newfield contributor: Contributor, Contributors (Alphabetical Order)
+:contributor: `Glyph Lefkowitz  &lt;mailto:glyph@twistedmatrix.com&gt;`__
+:contributor: `Edward Loper  &lt;mailto:edloper@gradient.cis.upenn.edu&gt;`__
+:contributor: `Bruce Mitchener  &lt;mailto:bruce@cubik.org&gt;`__
+:contributor: `Jeff O'Halloran  &lt;mailto:jeff@ohalloran.ca&gt;`__
+:contributor: `Simon Pamies  &lt;mailto:spamies@bipbap.de&gt;`__
+:contributor: `Christian Reis  &lt;mailto:kiko@async.com.br&gt;`__
+:contributor: `Daniele Varrazzo  &lt;mailto:daniele.varrazzo@gmail.com&gt;`__
+
+.. |copy| unicode:: 0xA9 .. copyright sign
+
+</pre>
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        3.0.1
+      </p>
+      <p><strong>Author:</strong>
+        Edward Loper &lt;edloper@gradient.cis.upenn.edu&gt;
+      </p>
+      <p><strong>License:</strong>
+        IBM Open Source License
+      </p>
+</div><!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="script_path"></a><span class="summary-name">script_path</span> = <code title="os.path.abspath(sys.path [0])">os.path.abspath(sys.path [0])</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DEBUG"></a><span class="summary-name">DEBUG</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__package__"></a><span class="summary-name">__package__</span> = <code title="None">None</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="__url__"></a><span class="summary-name">__url__</span> = <code title="'http://epydoc.sourceforge.net'"><code class="variable-quote">'</code><code class="variable-string">http://epydoc.sourceforge.net</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0.1 on Sun Sep 25 14:50:39 2016
+    </td>
+    <td align="right" class="footer">
+      <a target="mainFrame" href="http://epydoc.sourceforge.net"
+        >http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie();
+  // -->
+</script>
+</body>
+</html>
