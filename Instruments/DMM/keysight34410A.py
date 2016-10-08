@@ -1,5 +1,5 @@
 import pyvisa
-
+import time
 
 class keysight34410A(object):
 	"""
